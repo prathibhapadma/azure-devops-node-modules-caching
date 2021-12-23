@@ -35,7 +35,7 @@ steps:
     displayName: Cache NPM packages
   - script: | 
       npm ci
-      echo "$(npm_config_cache)"
+      echo $(Pipeline.Workspace)
     displayName: NPM Install Dependencies
     # condition: ne(variables['CacheRestored'], 'true')
   - script: npm run lint
