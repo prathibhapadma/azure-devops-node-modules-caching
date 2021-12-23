@@ -31,12 +31,14 @@ steps:
       key: 'package-lock.json'
       path: $(Pipeline.Workspace)/node_modules
     displayName: Cache NPM packages
-  - bash: npm ci
+  - script: | 
+      npm ci
+      echo $(npm_config_cache)
     displayName: NPM Install Dependencies
     # condition: ne(variables['CacheRestored'], 'true')
-  - bash: npm run lint
+  - script: npm run lint
     displayName: Lint
-  - bash: npm run test:ci
+  - script: npm run test:ci
     displayName: Unit Tests
-  - bash: npm run build
+  - script: npm run build
     displayName: Build
