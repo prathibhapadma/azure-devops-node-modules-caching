@@ -3,6 +3,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+
+
 # jobs:
 #   - job: install
 #     pool:
@@ -31,10 +35,10 @@ steps:
       key: 'npm | "$(Agent.OS)" | package-lock.json'
       restoreKeys: |
         npm | "$(Agent.OS)"
-      path: ~/.npm
+      path: $(npm_config_cache)
     displayName: Cache NPM packages
   - script: | 
-      npm ci
+      npm ci --cache $(npm_config_cache)
     displayName: NPM Install Dependencies
   - script: |
       npm cache ls
