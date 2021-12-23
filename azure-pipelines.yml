@@ -1,5 +1,5 @@
 trigger:
-- main
+  - main
 pool:
   vmImage: ubuntu-latest
 
@@ -20,18 +20,23 @@ pool:
 #     vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
 #     platformIndependent: true
 steps:
-# - task: RestoreAndSaveCache@1
-#   inputs:
-#     keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-#     targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-#     vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
-#     platformIndependent: true
-- bash: npm ci
-  displayName: NPM Install Dependencies
-  # condition: ne(variables['CacheRestored'], 'true')
-- bash: npm run lint
-  displayName: Lint
-- bash: npm run test:ci
-  displayName: Unit Tests
-- bash: npm run build
-  displayName: Build
+  # - task: RestoreAndSaveCache@1
+  #   inputs:
+  #     keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+  #     targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+  #     vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
+  #     platformIndependent: true
+  - task: Cache@2
+    inputs:
+      key: 'package-lock.json'
+      path: $(Pipeline.Workspace)/node_modules
+    displayName: Cache NPM packages
+  - bash: npm ci
+    displayName: NPM Install Dependencies
+    # condition: ne(variables['CacheRestored'], 'true')
+  - bash: npm run lint
+    displayName: Lint
+  - bash: npm run test:ci
+    displayName: Unit Tests
+  - bash: npm run build
+    displayName: Build
