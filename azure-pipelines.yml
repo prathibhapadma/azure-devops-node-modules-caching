@@ -36,7 +36,9 @@ steps:
   - script: | 
       npm ci
     displayName: NPM Install Dependencies
-  - script: npm cache ls
+  - script: |
+      npm cache ls
+      npm cache verify
     displayName: NPM Show cache
     # condition: ne(variables['CacheRestored'], 'true')
   - script: npm run lint
