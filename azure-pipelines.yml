@@ -31,7 +31,7 @@ steps:
       key: 'npm | "$(Agent.OS)" | package-lock.json'
       restoreKeys: |
         npm | "$(Agent.OS)"
-      path: $(Pipeline.Workspace)/.npm
+      path: ~/.npm
     displayName: Cache NPM packages
   - script: | 
       npm ci
