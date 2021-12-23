@@ -29,11 +29,9 @@ steps:
   - task: Cache@2
     inputs:
       key: 'package-lock.json'
-      path: $(Pipeline.Workspace)/node_modules
+      path: $(Pipeline.Workspace)/.npm
     displayName: Cache NPM packages
-  - script: | 
-      npm ci
-      echo $(npm_config_cache)
+  - script: npm ci
     displayName: NPM Install Dependencies
     # condition: ne(variables['CacheRestored'], 'true')
   - script: npm run lint
