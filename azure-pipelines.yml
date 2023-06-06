@@ -12,10 +12,14 @@ steps:
       key: 'package-lock.json'
       path: $(npm_config_cache)
     displayName: Cache NPM packages
-  - script: | 
-      npm ci --cache $(npm_config_cache)
-    displayName: NPM Install Dependencies
-    # You need to set --cache explicitly, because the default location on POSIX systems is ~/.npm, which can't be accessed in a build agent as far as I know
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: '--cache $(npm_config_cache)'
+  # - script: | 
+  #     npm ci --cache $(npm_config_cache)
+  #   displayName: NPM Install Dependencies
+  #   # You need to set --cache explicitly, because the default location on POSIX systems is ~/.npm, which can't be accessed in a build agent as far as I know
   - script: |
       npm cache ls
       npm cache verify
