@@ -14,6 +14,10 @@ steps:
     displayName: Cache NPM packages
   - task: Npm@1
     inputs:
+      command: 'ci'
+      workingDir: '$(npm_config_cache)'
+  - task: Npm@1
+    inputs:
       command: 'install'
       workingDir: '--cache $(npm_config_cache)'
   # - script: | 
