@@ -19,7 +19,7 @@ steps:
   - task: Npm@1
     inputs:
       command: 'install'
-      workingDir: '--cache $(npm_config_cache)'
+      workingDir: '$(npm_config_cache)'
   # - script: | 
   #     npm ci --cache $(npm_config_cache)
   #   displayName: NPM Install Dependencies
